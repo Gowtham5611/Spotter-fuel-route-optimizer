@@ -1,0 +1,71 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# Django
+*.sqlite3
+local_settings.py
+backend/db.sqlite3
+
+# Django media/static collected
+staticfiles/
+media/
+
+# Environment files — NEVER commit secrets
+backend/.env
+
+# Logs
+logs/*.log
+*.log
+
+# Data files — see README for placement
+# data/raw/fuel-prices-for-be-assessment.csv  # Uncomment to exclude CSV from git
+data/cache/
+data/outputs/
+
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Temporary
+*.tmp
+*.bak
+*.orig
+
+# OS
+Desktop.ini
+ehthumbs.db
+
+data/raw/fuel-prices-for-be-assessment.csv
+
+data/raw/fuel-prices-for-be-assessment.csv

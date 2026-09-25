@@ -1,0 +1,245 @@
+{
+	"info": {
+		"_postman_id": "spotter-fuel-route-api-collection",
+		"name": "Spotter Fuel Route Optimizer API",
+		"description": "Postman collection for testing the Spotter Fuel Route Optimizer REST API endpoints.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/health/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"health",
+						""
+					]
+				},
+				"description": "Verifies that the backend API service is running and healthy."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Configuration",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/config/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"config",
+						""
+					]
+				},
+				"description": "Retrieves the active configuration constants (max range, MPG, corridor distance, etc.)."
+			},
+			"response": []
+		},
+		{
+			"name": "Optimize Route (New York -> Chicago)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"start\": \"New York, NY\",\n  \"destination\": \"Chicago, IL\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/routes/optimize/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"routes",
+						"optimize",
+						""
+					]
+				},
+				"description": "Standard long-haul test route (~790 miles) requiring 1 fuel stop with 500-mile max range."
+			},
+			"response": []
+		},
+		{
+			"name": "Optimize Route (Los Angeles -> Las Vegas)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"start\": \"Los Angeles, CA\",\n  \"destination\": \"Las Vegas, NV\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/routes/optimize/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"routes",
+						"optimize",
+						""
+					]
+				},
+				"description": "Short route (~270 miles) test case - should require 0 fuel stops."
+			},
+			"response": []
+		},
+		{
+			"name": "Optimize Route (Dallas -> Houston)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"start\": \"Dallas, TX\",\n  \"destination\": \"Houston, TX\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/routes/optimize/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"routes",
+						"optimize",
+						""
+					]
+				},
+				"description": "Intra-state Texas route (~240 miles) - verifies single-state routing."
+			},
+			"response": []
+		},
+		{
+			"name": "Error Validation - Missing Destination",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"start\": \"New York, NY\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/routes/optimize/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"routes",
+						"optimize",
+						""
+					]
+				},
+				"description": "Tests 400 Bad Request error response when required fields are missing."
+			},
+			"response": []
+		},
+		{
+			"name": "Error Validation - Same Start and Destination",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"start\": \"Chicago, IL\",\n  \"destination\": \"Chicago, IL\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/routes/optimize/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"routes",
+						"optimize",
+						""
+					]
+				},
+				"description": "Tests 400 Bad Request error response when start and destination are identical."
+			},
+			"response": []
+		},
+		{
+			"name": "Error Validation - Non-USA Location",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"start\": \"London, UK\",\n  \"destination\": \"Paris, France\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/routes/optimize/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"routes",
+						"optimize",
+						""
+					]
+				},
+				"description": "Tests 422 Unprocessable Entity error response when locations are outside the USA."
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		}
+	]
+}
